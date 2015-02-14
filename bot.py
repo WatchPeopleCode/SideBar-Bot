@@ -37,8 +37,10 @@ else:
 
 output = ""
 for stream in top_streams:
-	output += "Check out [{}]({}) streaming".format(stream["user"], stream["url"])
+	output += "Check out [{}]({}) streaming".format(stream["streamer"], stream["url"])
 
+subreddit = r.get_subreddit(SUBREDDIT)
+subreddit.update_settings["This is all a template {}".format(output)]
 print(output)
 
 # TODO: Set sidebar to output.
