@@ -1,3 +1,9 @@
+"""
+@author Harrison Shoebridge <@paked/@hcwool>
+
+The r/WatchPeopleCode sidebar updater script/bot!
+"""
+
 from praw import *
 
 import random
@@ -37,6 +43,7 @@ if len(live_streams) >= 3:
 else:
 	top_streams = live_streams
 
+# Assemble the description.
 output = ""
 for stream in top_streams:
 	output += "Interested in [{} streaming {}?]({})\n\n".format(stream["username"],
