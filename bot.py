@@ -11,10 +11,6 @@ import os
 import requests
 import json
 
-# Open up the bots config.
-config_data = open('config.json')
-config = json.load(config_data)
-
 class Bot:
 	"""
 	Bot represents a basic bot, with a reddit username, password and subreddit
@@ -84,12 +80,17 @@ class SidebarBot(Bot):
 	def _get_streams(self):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
 
-sb = SidebarBot(config["bot"]["username"],
-				config["bot"]["password"],
-				config["description"],
-				subreddit=config["subreddit"],
-				mode=config["mode"],
-				debug=True)
+if __name__ == '__main__':
+	# Open up the bots config.
+	config_data = open('config.json')
+	config = json.load(config_data)
 
-sb.update()
-config_data.close()
+	sb = SidebarBot(config["bot"]["username"],
+					config["bot"]["password"],
+					config["description"],
+					subreddit=config["subreddit"],
+					mode=config["mode"],
+					debug=True)
+
+	sb.update()
+	config_data.close()
