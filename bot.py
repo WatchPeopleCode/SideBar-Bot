@@ -12,8 +12,8 @@ config = json.load(config_data)
 # Set credentials for the bot.
 BOT_NAME = config["bot"]["username"]
 BOT_PASSWORD = config["bot"]["password"]
-SUBREDDIT = config["subreddit"] or "watchpeoplecode"
-MODE = config["mode"] or "live"
+SUBREDDIT = config.get("subreddit") or "watchpeoplecode"
+MODE = config.get("mode") or "live"
 DESCRIPTION = config["description"]
 
 r = Reddit('Get the top 3 streams from r/WatchPeopleCode')
@@ -43,7 +43,7 @@ for stream in top_streams:
 														   stream["title"],
 														   stream["url"])
 subreddit = r.get_subreddit(SUBREDDIT)
-subreddit.update_settings(description="{}{}".format(DESCRIPTION, output).encode('utf8'))
+subreddit.update_settings(description="{}\n{}".format(DESCRIPTION, output).encode('utf8'))
 print(output)
 
 config_data.close()
