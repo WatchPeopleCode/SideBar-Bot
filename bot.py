@@ -16,6 +16,9 @@ config_data = open('config.json')
 config = json.load(config_data)
 
 class Bot:
+	"""
+	Bot represents a basic bot, with a reddit username, password and subreddit
+	"""
 	def __init__(self, username, password, subreddit="watchpeoplecode", debug=False):
 		self._username = username
 		self._password = password
@@ -37,6 +40,9 @@ class Bot:
 
 
 class SidebarBot(Bot):
+	"""
+	Sidebar bot, a bot to update your sidebar!
+	"""
 	def __init__(self, username, password, description, subreddit="watchpeoplecode", mode="live", debug=False):
 		super().__init__(username, password, subreddit, debug)
 
