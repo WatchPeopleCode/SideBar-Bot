@@ -31,7 +31,7 @@ data = requests.get("http://www.watchpeoplecode.com/json").json()
 # Choose 3 random streams to display in sidebar.
 live_streams = data[MODE]
 top_streams = []
-if len(live_streams) >= 3:
+if len(live_streams) > 3:
 	chosen = []
 	for z in range(0, 3):
 		i = 0
@@ -46,11 +46,11 @@ else:
 # Assemble the description.
 output = ""
 for stream in top_streams:
-	output += "Interested in [{} streaming {}?]({})\n\n".format(stream["username"],
+	output += "You should check out [{0}](http://reddit.com/r/{0}) streaming [{1}]({2})\n\n".format(stream["username"],
 														   stream["title"],
 														   stream["url"])
 subreddit = r.get_subreddit(SUBREDDIT)
-subreddit.update_settings(description="{}\n{}".format(DESCRIPTION, output).encode('utf8'))
+subreddit.update_settings(description="{}\n====\n{}".format(DESCRIPTION, output).encode('utf8'))
 print(output)
 
 config_data.close()
