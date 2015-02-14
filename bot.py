@@ -13,6 +13,7 @@ config = json.load(config_data)
 BOT_NAME = config["bot"]["username"]
 BOT_PASSWORD = config["bot"]["password"]
 SUBREDDIT = config["subreddit"] or "watchpeoplecode"
+MODE = config["mode"] or "live"
 
 r = Reddit('Get the top 3 streams from r/WatchPeopleCode')
 r.login(BOT_NAME, BOT_PASSWORD)
@@ -21,13 +22,13 @@ r.login(BOT_NAME, BOT_PASSWORD)
 data = requests.get("http://www.watchpeoplecode.com/json").json()
 
 # Choose 3 random streams to display in sidebar.
-live_streams = data["stream_urls"]
+live_streams = data[MODE]
 top_streams = []
 if len(live_streams) >= 3:
 	chosen = []
 	for z in range(0, 3):
 		i = 0
-		while i not in chosen:
+		while i in chosen:
 			i = random.randint(0, len(live_streams))
 		
 		top_streams.append(live_streams[i])
@@ -37,10 +38,11 @@ else:
 
 output = ""
 for stream in top_streams:
-	output += "Check out [{}]({}) streaming".format(stream["streamer"], stream["url"])
-
+	output += "Interested in [{} streaming {}?]({})\n\n".format(stream["username"],
+														   stream["title"],
+														   stream["url"])
 subreddit = r.get_subreddit(SUBREDDIT)
-subreddit.update_settings["This is all a template {}".format(output)]
+subreddit.update_settings(description="{}".format(output).encode('utf8'))
 print(output)
 
 # TODO: Set sidebar to output.
