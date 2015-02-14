@@ -14,6 +14,7 @@ BOT_NAME = config["bot"]["username"]
 BOT_PASSWORD = config["bot"]["password"]
 SUBREDDIT = config["subreddit"] or "watchpeoplecode"
 MODE = config["mode"] or "live"
+DESCRIPTION = config["description"]
 
 r = Reddit('Get the top 3 streams from r/WatchPeopleCode')
 r.login(BOT_NAME, BOT_PASSWORD)
@@ -42,10 +43,8 @@ for stream in top_streams:
 														   stream["title"],
 														   stream["url"])
 subreddit = r.get_subreddit(SUBREDDIT)
-subreddit.update_settings(description="{}".format(output).encode('utf8'))
+subreddit.update_settings(description="{}{}".format(DESCRIPTION, output).encode('utf8'))
 print(output)
-
-# TODO: Set sidebar to output.
 
 config_data.close()
 
