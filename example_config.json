@@ -7,6 +7,7 @@
 	"mode": "THE MODE YOU WANT TO RUN IN, 'live', 'completed' or 'upcomming'",
 	"description": {
 		"pre": "Markdown to be appended before the streams",
+		"template": "Using the syntax of str.format(template, username, title, url), how should each stream appear!",
 		"post": "Markdown to be appended after the streams"
 	}
 }

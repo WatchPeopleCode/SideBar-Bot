@@ -58,7 +58,7 @@ class SidebarBot(Bot):
 	def generate_description(self, streams):
 		output = self.description["pre"] + "\n\n"
 		for stream in streams:
-			output += "You should check out [{0}](http://reddit.com/r/{0}) streaming [{1}]({2})\n\n".format(stream["username"], stream["title"], stream["url"])
+			output += self.description["template"].format(stream["username"], stream["title"], stream["url"]) + "\n\n"
 
 		output += "\n\n" + self.description["post"]
 		return output
