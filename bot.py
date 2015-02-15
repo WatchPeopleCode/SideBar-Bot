@@ -48,15 +48,17 @@ class SidebarBot(Bot):
 	def update(self):
 		self.log("Just about to start making that sweet description of yours!")
 		description = self.generate_description(self.choose_streams())
+
+		self.log("Whew! About to update your subreddits sidebar!")
 		subreddit = self.r.get_subreddit(self._subreddit)
 		subreddit.update_settings(description=description.encode('utf8'))
-		self.log("Whew! Just updated your subreddits sidebar!")
 
 	def generate_description(self, streams):
-		output = self.description + "\n\n"
+		output = self.description["pre"] + "\n\n"
 		for stream in streams:
 			output += "You should check out [{0}](http://reddit.com/r/{0}) streaming [{1}]({2})\n\n".format(stream["username"], stream["title"], stream["url"])
 
+		output += "\n\n" + self.description["post"]
 		return output
 
 	def choose_streams(self):

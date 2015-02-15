@@ -3,5 +3,10 @@
 		"username": "YOUR BOTS USERNAME",
 		"password": "YOUR BOTS PASSWORD"
 	},
-	"subreddit": "watchpeoplecode"
+	"subreddit": "watchpeoplecode",
+	"mode": "THE MODE YOU WANT TO RUN IN, 'live', 'completed' or 'upcomming'",
+	"description": {
+		"pre": "Markdown to be appended before the streams",
+		"post": "Markdown to be appended after the streams"
+	}
 }
