@@ -95,13 +95,13 @@ if __name__ == '__main__':
 					config["description"],
 					subreddit=config["subreddit"],
 					mode=config["mode"],
-					debug=True)
+					debug=config["debug"])
 	while True:
 		try:
 			sb.update()
 		except:
 			print("FAILED: todo mail harrison and aaron")
 			# mail hcwool, and aaron.
-		time.sleep(10)
+		time.sleep(int(config["timer"]))
 	
 	config_data.close()
