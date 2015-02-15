@@ -12,6 +12,7 @@ import random
 import os
 import requests
 import json
+import time
 
 class Bot:
 	"""
@@ -95,6 +96,11 @@ if __name__ == '__main__':
 					subreddit=config["subreddit"],
 					mode=config["mode"],
 					debug=True)
-
-	sb.update()
+	while True:
+		try:
+			sb.update()
+		except:
+			# mail hcwool, and aaron.
+			time.sleep(10)
+	
 	config_data.close()
