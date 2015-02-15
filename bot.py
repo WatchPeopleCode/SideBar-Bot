@@ -71,7 +71,7 @@ class SidebarBot(Bot):
 		if len(live_streams) > 3:
 			chosen = []
 			for z in range(0, 3):
-				i = 0
+				i = random.randint(0, len(live_streams)) 
 				while i in chosen:
 					i = random.randint(0, len(live_streams))
 				
@@ -100,7 +100,8 @@ if __name__ == '__main__':
 		try:
 			sb.update()
 		except:
+			print("FAILED: todo mail harrison and aaron")
 			# mail hcwool, and aaron.
-			time.sleep(10)
+		time.sleep(10)
 	
 	config_data.close()
