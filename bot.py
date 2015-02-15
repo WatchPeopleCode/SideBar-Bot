@@ -12,6 +12,7 @@ import random
 import os
 import requests
 import json
+import time
 
 class Bot:
 	"""
@@ -70,7 +71,7 @@ class SidebarBot(Bot):
 		if len(live_streams) > 3:
 			chosen = []
 			for z in range(0, 3):
-				i = 0
+				i = random.randint(0, len(live_streams)) 
 				while i in chosen:
 					i = random.randint(0, len(live_streams))
 				
@@ -94,7 +95,13 @@ if __name__ == '__main__':
 					config["description"],
 					subreddit=config["subreddit"],
 					mode=config["mode"],
-					debug=True)
-
-	sb.update()
+					debug=config["debug"])
+	while True:
+		try:
+			sb.update()
+		except:
+			print("FAILED: todo mail harrison and aaron")
+			# mail hcwool, and aaron.
+		time.sleep(int(config["timer"]))
+	
 	config_data.close()
