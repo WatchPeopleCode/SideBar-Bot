@@ -2,6 +2,8 @@
 @author Harrison Shoebridge <@paked/@hcwool>
 
 The r/WatchPeopleCode sidebar updater script/bot!
+
+In order to use the bot you will need a config.json file, following the format of the provided example_config.json
 """
 
 from praw import *
