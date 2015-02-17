@@ -121,6 +121,6 @@ if __name__ == '__main__':
 			sb.update()
 		except:
 			print("FAILED: todo mail harrison and aaron")
-			# mail hcwool, and aaron.
-		time.sleep(timer)
+			# mail harrison, and aaron.
 
+		time.sleep(int(config["timer"]))
