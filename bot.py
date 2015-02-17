@@ -102,6 +102,7 @@ if __name__ == '__main__':
 		except:
 			print("FAILED: todo mail harrison and aaron")
 			# mail hcwool, and aaron.
+
 		time.sleep(int(config["timer"]))
 	
 	config_data.close()
