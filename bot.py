@@ -86,17 +86,8 @@ class SidebarBot(Bot):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
 
 if __name__ == '__main__':
-	username = os.environ.get('BOT_USERNAME')
-	password = os.environ.get('BOT_PASSWORD')
-	mode = os.environ.get('MODE')
-	description = {"pre": os.environ.get('DESCRIPTION_PRE'),
-				   "template": os.environ.get('DESCRIPTION_TEMPLATE'),
-				   "post": os.environ.get('DESCRIPTION_POST')}
-	subreddit = os.environ.get('SUBREDDIT')
-	debug = os.environ.get('DEBUG')
-	timer = int(os.environ.get('TIMER'))
-
 	if not os.environ.get('ENV_MODE'):
+		print("In JSON mode")
 		config_data = open('config.json')
 		config = json.load(config_data)
 
@@ -109,6 +100,16 @@ if __name__ == '__main__':
 		debug = config["debug"]
 
 		config_data.close()
+	else:
+		username = os.environ['BOT_USERNAME']
+		password = os.environ['BOT_PASSWORD']
+		mode = os.environ['MODE']
+		description = {"pre": os.environ['DESCRIPTION_PRE'],
+					   "template": os.environ['DESCRIPTION_TEMPLATE'],
+					   "post": os.environ['DESCRIPTION_POST']}
+		subreddit = os.environ['SUBREDDIT']
+		debug = os.environ['DEBUG']
+		timer = int(os.environ['TIMER'])
 
 	sb = SidebarBot(username,
 					password,
