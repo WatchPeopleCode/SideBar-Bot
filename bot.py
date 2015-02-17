@@ -124,4 +124,4 @@ if __name__ == '__main__':
 			print("FAILED: todo mail harrison and aaron")
 			# mail harrison, and aaron.
 
-		time.sleep(int(config["timer"]))
+		time.sleep(timer)
