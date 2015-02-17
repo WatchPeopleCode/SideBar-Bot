@@ -86,22 +86,41 @@ class SidebarBot(Bot):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
 
 if __name__ == '__main__':
-	# Open up the bots config.
-	config_data = open('config.json')
-	config = json.load(config_data)
+	username = os.environ.get('BOT_USERNAME')
+	password = os.environ.get('BOT_PASSWORD')
+	mode = os.environ.get('MODE')
+	description = {"pre": os.environ.get('DESCRIPTION_PRE'),
+				   "template": os.environ.get('DESCRIPTION_TEMPLATE'),
+				   "post": os.environ.get('DESCRIPTION_POST')}
+	subreddit = os.environ.get('SUBREDDIT')
+	debug = os.environ.get('DEBUG')
+	timer = int(os.environ.get('TIMER'))
 
-	sb = SidebarBot(config["bot"]["username"],
-					config["bot"]["password"],
-					config["description"],
-					subreddit=config["subreddit"],
-					mode=config["mode"],
-					debug=config["debug"])
+	if not os.environ.get('ENV_MODE'):
+		config_data = open('config.json')
+		config = json.load(config_data)
+
+		username = config["bot"]["username"]
+		password = config["bot"]["password"]
+		description = config["description"]
+		subreddit = config["subreddit"]
+		timer = int(config["timer"])
+		mode = config["mode"]
+		debug = config["debug"]
+
+		config_data.close()
+
+	sb = SidebarBot(username,
+					password,
+					description,
+					subreddit=subreddit,
+					mode=mode,
+					debug=debug)
 	while True:
 		try:
 			sb.update()
 		except:
 			print("FAILED: todo mail harrison and aaron")
 			# mail hcwool, and aaron.
-		time.sleep(int(config["timer"]))
-	
-	config_data.close()
+		time.sleep(timer)
+
