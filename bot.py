@@ -52,9 +52,11 @@ class SidebarBot(Bot):
 		self.log("Just about to start making that sweet description of yours!")
 		description = self.generate_description(self.choose_streams())
 
-		self.log("Whew! About to update your subreddits sidebar!")
+		self.log("Whew! Just gonna get that specified subreddit for you!")
 		subreddit = self.r.get_subreddit(self._subreddit)
+		self.log("Updating your sidebar now...")
 		subreddit.update_settings(description=description.encode('utf8'))
+		self.log("Updated your sidebar")
 
 	def generate_description(self, streams):
 		output = self.description["pre"] + "\n\n"
