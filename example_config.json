@@ -1,0 +1,15 @@
+{
+	"bot": {
+		"username": "YOUR BOTS USERNAME",
+		"password": "YOUR BOTS PASSWORD"
+	},
+	"subreddit": "The subreddit, note: the bot MUST have mod permissions",
+	"mode": "EITHER 'live', 'upcoming' or 'completed'",
+	"description": {
+		"pre": "Markdown to be appended before the streams",
+		"template": "Using the syntax of str.format(template, username, title, url), how should each stream appear!",
+		"post": "Markdown to be appended after the streams"
+	},
+	"timer": 300,
+	"debug": true
+}
