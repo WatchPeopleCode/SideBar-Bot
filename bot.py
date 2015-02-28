@@ -62,7 +62,7 @@ class SidebarBot(Bot):
 	def generate_description(self, streams):
 		output = self.description["pre"] + "\n\n"
 		output += self.description["viewers_template"].format(str(self._get_total_viewers())) + "\n\n"
-		for stream in streams:  # Add a viewercount with each stream too?
+		for stream in streams:
 			output += self.description["template"].format(stream["username"], stream["title"], stream["url"], self._get_viewers(stream)) + "\n\n"
 
 		output += "\n\n" + self.description["post"]
@@ -99,7 +99,12 @@ class SidebarBot(Bot):
 			
 	def _get_viewers(self, stream):
 		if "twitch.tv" in stream["url"]:
-			stream_json = requests.get("https://api.twitch.tv/kraken/streams?channel=" + stream["url"].rsplit("/", 1)).json()
+			twitch_name = stream["url"].split("/")
+			if twitch_name[-1] == "":
+				twitch_name = twitch_name[-2]
+			else:
+				twitch_name = twitch_name[-1]
+			stream_json = requests.get("https://api.twitch.tv/kraken/streams?channel=" + twitch_name).json()
 			return stream_json["streams"][0]["viewers"]
 		elif "youtube.com" in stream["url"]:
 			# WARNING - Only accepts Youtube urls in the yt.com/watch?v=... format.
@@ -131,7 +136,7 @@ if __name__ == '__main__':
 		password = os.environ['BOT_PASSWORD']
 		mode = os.environ['MODE']
 		description = {"pre": os.environ['DESCRIPTION_PRE'],
-					   "viewers_template": os.environ["DESCRIPTION_VIEWERS_TEMPLATE"],
+					   "viewers_template": os.environ['DESCRIPTION_VIEWERS_TEMPLATE'],
 					   "template": os.environ['DESCRIPTION_TEMPLATE'],
 					   "post": os.environ['DESCRIPTION_POST']}
 		subreddit = os.environ['SUBREDDIT']
@@ -150,5 +155,4 @@ if __name__ == '__main__':
 		except:
 			print("FAILED: todo mail harrison and aaron")
 			# mail harrison, and aaron.
-
 		time.sleep(timer)
