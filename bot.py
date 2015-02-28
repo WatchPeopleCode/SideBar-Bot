@@ -13,6 +13,7 @@ import os
 import requests
 import json
 import time
+from urllib.parse import urlparse, parse_qs
 
 class Bot:
 	"""
@@ -59,8 +60,9 @@ class SidebarBot(Bot):
 		self.log("Updated your sidebar")
 
 	def generate_description(self, streams):
+        # Add total viewercount at the top of the description here?
 		output = self.description["pre"] + "\n\n"
-		for stream in streams:
+		for stream in streams:  # Add a viewercount with each stream too?
 			output += self.description["template"].format(stream["username"], stream["title"], stream["url"]) + "\n\n"
 
 		output += "\n\n" + self.description["post"]
@@ -83,6 +85,25 @@ class SidebarBot(Bot):
 			top_streams = live_streams
 
 		return top_streams
+
+	def get_viewers(self):
+		streams = self._get_streams()
+		live_streams = streams[self.mode]
+		viewers = 0
+		if len(live_streams) == 0:
+			return viewers
+		else:
+			for stream in live_streams:
+				if "twitch.tv" in stream["url"]:
+					stream_json = requests.get("https://api.twitch.tv/kraken/streams?channel=" + stream["url"].rsplit("/", 1)).json()
+					viewers += stream_json["streams"][0]["viewers"]
+				elif "youtube.com" in stream["url"]:
+					# WARNING - Only accepts Youtube urls in the yt.com/watch?v=... format.
+					url_data = urlparse(stream["url"])
+					video_id = parse_qs(url_data.query)["v"][0]
+					stream_viewers = requests.get("https://www.youtube.com/live_stats?v=" + video_id)
+					viewers += int(stream_viewers)
+			return viewers
 
 	def _get_streams(self):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
