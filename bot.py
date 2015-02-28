@@ -60,8 +60,8 @@ class SidebarBot(Bot):
 		self.log("Updated your sidebar")
 
 	def generate_description(self, streams):
-        # Add total viewercount at the top of the description here?
 		output = self.description["pre"] + "\n\n"
+		output += self.description["viewers_template"].format(str(self._get_total_viewers())) + "\n\n"
 		for stream in streams:  # Add a viewercount with each stream too?
 			output += self.description["template"].format(stream["username"], stream["title"], stream["url"]) + "\n\n"
 
@@ -85,8 +85,8 @@ class SidebarBot(Bot):
 			top_streams = live_streams
 
 		return top_streams
-
-	def get_viewers(self):
+		
+	def _get_total_viewers(self):
 		streams = self._get_streams()
 		live_streams = streams[self.mode]
 		viewers = 0
@@ -94,17 +94,20 @@ class SidebarBot(Bot):
 			return viewers
 		else:
 			for stream in live_streams:
-				if "twitch.tv" in stream["url"]:
-					stream_json = requests.get("https://api.twitch.tv/kraken/streams?channel=" + stream["url"].rsplit("/", 1)).json()
-					viewers += stream_json["streams"][0]["viewers"]
-				elif "youtube.com" in stream["url"]:
-					# WARNING - Only accepts Youtube urls in the yt.com/watch?v=... format.
-					url_data = urlparse(stream["url"])
-					video_id = parse_qs(url_data.query)["v"][0]
-					stream_viewers = requests.get("https://www.youtube.com/live_stats?v=" + video_id)
-					viewers += int(stream_viewers)
+				viewers += self._get_viewers(stream)
 			return viewers
-
+			
+	def _get_viewers(self, stream):
+		if "twitch.tv" in stream["url"]:
+			stream_json = requests.get("https://api.twitch.tv/kraken/streams?channel=" + stream["url"].rsplit("/", 1)).json()
+			return stream_json["streams"][0]["viewers"]
+		elif "youtube.com" in stream["url"]:
+			# WARNING - Only accepts Youtube urls in the yt.com/watch?v=... format.
+			url_data = urlparse(stream["url"])
+			video_id = parse_qs(url_data.query)["v"][0]
+			stream_viewers = requests.get("https://www.youtube.com/live_stats?v=" + video_id)
+			return int(stream_viewers)
+	
 	def _get_streams(self):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
 
@@ -128,6 +131,7 @@ if __name__ == '__main__':
 		password = os.environ['BOT_PASSWORD']
 		mode = os.environ['MODE']
 		description = {"pre": os.environ['DESCRIPTION_PRE'],
+					   "viewers_template": os.environ["DESCRIPTION_VIEWERS_TEMPLATE"],
 					   "template": os.environ['DESCRIPTION_TEMPLATE'],
 					   "post": os.environ['DESCRIPTION_POST']}
 		subreddit = os.environ['SUBREDDIT']
