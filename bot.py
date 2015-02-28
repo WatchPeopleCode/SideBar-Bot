@@ -75,11 +75,11 @@ class SidebarBot(Bot):
 		if len(live_streams) > 3:
 			chosen = []
 			for z in range(0, 3):
-				i = random.randint(0, len(live_streams)) 
+				i = random.randint(0, len(live_streams))
 				while i in chosen:
 					i = random.randint(0, len(live_streams))
 				
-				top_streams.append(live_streams[i])
+				top_streams.append(live_streams[i - 1])
 				chosen.append(i)
 		else:
 			top_streams = live_streams
