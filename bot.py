@@ -111,7 +111,7 @@ class SidebarBot(Bot):
 			url_data = urlparse(stream["url"])
 			video_id = parse_qs(url_data.query)["v"][0]
 			stream_viewers = requests.get("https://www.youtube.com/live_stats?v=" + video_id)
-			return int(stream_viewers)
+			return int(stream_viewers.text)
 	
 	def _get_streams(self):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
