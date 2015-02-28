@@ -75,11 +75,11 @@ class SidebarBot(Bot):
 		if len(live_streams) > 3:
 			chosen = []
 			for z in range(0, 3):
-				i = random.randint(0, len(live_streams)) 
+				i = random.randint(0, len(live_streams))
 				while i in chosen:
 					i = random.randint(0, len(live_streams))
 				
-				top_streams.append(live_streams[i])
+				top_streams.append(live_streams[i - 1])
 				chosen.append(i)
 		else:
 			top_streams = live_streams
@@ -111,7 +111,7 @@ class SidebarBot(Bot):
 			url_data = urlparse(stream["url"])
 			video_id = parse_qs(url_data.query)["v"][0]
 			stream_viewers = requests.get("https://www.youtube.com/live_stats?v=" + video_id)
-			return int(stream_viewers)
+			return int(stream_viewers.text)
 	
 	def _get_streams(self):
 		return requests.get("http://www.watchpeoplecode.com/json").json()
