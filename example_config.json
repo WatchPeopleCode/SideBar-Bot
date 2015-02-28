@@ -8,7 +8,7 @@
 	"description": {
 		"pre": "Markdown to be appended before the streams",
 		"viewers_template": "Using the syntax of str.format(viewers_template, viewers), how should each stream appear!",
-		"template": "Using the syntax of str.format(template, username, title, url), how should each stream appear!",
+		"template": "Using the syntax of str.format(template, username, title, url, viewers), how should each stream appear!",
 		"post": "Markdown to be appended after the streams"
 	},
 	"timer": 300,

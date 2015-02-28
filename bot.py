@@ -63,7 +63,7 @@ class SidebarBot(Bot):
 		output = self.description["pre"] + "\n\n"
 		output += self.description["viewers_template"].format(str(self._get_total_viewers())) + "\n\n"
 		for stream in streams:  # Add a viewercount with each stream too?
-			output += self.description["template"].format(stream["username"], stream["title"], stream["url"]) + "\n\n"
+			output += self.description["template"].format(stream["username"], stream["title"], stream["url"], self._get_viewers(stream)) + "\n\n"
 
 		output += "\n\n" + self.description["post"]
 		return output
