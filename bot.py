@@ -71,20 +71,10 @@ class SidebarBot(Bot):
 	def choose_streams(self):
 		streams = self._get_streams()
 		live_streams = streams[self.mode]
-		top_streams = []
-		if len(live_streams) > 3:
-			chosen = []
-			for z in range(0, 3):
-				i = random.randint(0, len(live_streams))
-				while i in chosen:
-					i = random.randint(0, len(live_streams))
-				
-				top_streams.append(live_streams[i - 1])
-				chosen.append(i)
+		if len(live_streams) <= 3:
+			return live_streams
 		else:
-			top_streams = live_streams
-
-		return top_streams
+			return random.sample(live_streams, 3)
 		
 	def _get_total_viewers(self):
 		streams = self._get_streams()
@@ -152,7 +142,10 @@ if __name__ == '__main__':
 	while True:
 		try:
 			sb.update()
-		except:
+		except errors.InvalidCaptcha:
+			print("WARNING: No Captcha Supplied\nIt worked anyway though...\nSuppress this message by getting 2 link karma.")
+		except Exception as e:
 			print("FAILED: todo mail harrison and aaron")
+			print(e)
 			# mail harrison, and aaron.
 		time.sleep(timer)
