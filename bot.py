@@ -152,6 +152,7 @@ if __name__ == '__main__':
 		try:
 			sb.update()
 		except Exception as e:
-			print("FAILED: todo mail harrison and aaron");print(e)
+			print("FAILED: todo mail harrison and aaron")
+			print(e)
 			# mail harrison, and aaron.
 		time.sleep(timer)
