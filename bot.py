@@ -25,7 +25,7 @@ class Bot:
 		self._subreddit = subreddit
 		self.debug = debug
 
-		self.r = Reddit("{0} a bot for /r/{1} to set top WPC streams!".format(self._username, self._password))
+		self.r = Reddit("{0} a bot for /r/{1} to set top WPC streams!".format(self._username, self._subreddit))
 
 		self.login()
 
