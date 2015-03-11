@@ -1,9 +1,9 @@
 """
-@author Harrison Shoebridge <@paked/@hcwool>
+Originally written by Harrison Shoebridge (@paked/@hcwool), now property of the WPC community!
 
 The r/WatchPeopleCode sidebar updater script/bot!
 
-In order to use the bot you will need a config.json file, following the format of the provided example_config.json
+Configuration is required, and can be done through the config.json or corresponding environment variables.
 """
 
 from praw import *
