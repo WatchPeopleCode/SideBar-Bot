@@ -88,20 +88,7 @@ class SidebarBot(Bot):
 			return viewers
 			
 	def _get_viewers(self, stream):
-		if "twitch.tv" in stream["url"]:
-			twitch_name = stream["url"].split("/")
-			if twitch_name[-1] == "":
-				twitch_name = twitch_name[-2]
-			else:
-				twitch_name = twitch_name[-1]
-			stream_json = requests.get("https://api.twitch.tv/kraken/streams?channel=" + twitch_name).json()
-			return stream_json["streams"][0]["viewers"]
-		elif "youtube.com" in stream["url"]:
-			# WARNING - Only accepts Youtube urls in the yt.com/watch?v=... format.
-			url_data = urlparse(stream["url"])
-			video_id = parse_qs(url_data.query)["v"][0]
-			stream_viewers = requests.get("https://www.youtube.com/live_stats?v=" + video_id)
-			return int(stream_viewers.text)
+		return stream["viewers"]
 	
 	def _get_streams(self):
 		return requests.get("http://www.watchpeoplecode.com/api/v0/blob").json()
