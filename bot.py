@@ -104,7 +104,7 @@ class SidebarBot(Bot):
 			return int(stream_viewers.text)
 	
 	def _get_streams(self):
-		return requests.get("http://www.watchpeoplecode.com/json").json()
+		return requests.get("http://www.watchpeoplecode.com/api/v0/blob").json()
 
 if __name__ == '__main__':
 	if not os.environ.get('ENV_MODE'):
