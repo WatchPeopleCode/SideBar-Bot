@@ -10,7 +10,7 @@ In order to get started with JSON configuration, copy the ```example_config.json
 ## Environment Variable Configuration
 Environment variables are the recommended production setup. Translation between JSON configuration and environment variable configuration is relatively simple: replace ```_``` instead of ```.```'s and changeall letters to upper-case.
 
-***note:*** if you are going to use environment variables, **ALWAYS** set ```ENV_MODE``` to anything other than None to enable it.
+***note: If you are going to use environment variables for configuration, set `ENV_MODE` to an arbitrary value***
 
 * ENV_MODE
 * BOT_USERNAME
