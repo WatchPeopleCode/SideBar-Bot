@@ -45,9 +45,10 @@ class SidebarBot(Bot):
 	"""
 	def __init__(self, username, password, description, subreddit="watchpeoplecode", mode="live", debug=False):
 		super().__init__(username, password, subreddit, debug)
+		if mode != 'live':
+			raise Exception("Only 'live' mode is supported")
 
 		self.description = description
-		self.mode = mode
 
 	def update(self):
 		self.log("Just about to start making that sweet description of yours!")
@@ -70,15 +71,10 @@ class SidebarBot(Bot):
 
 	def choose_streams(self):
 		streams = self._get_streams()
-		live_streams = streams[self.mode]
-		if len(live_streams) <= 3:
-			return live_streams
-		else:
-			return random.sample(live_streams, 3)
+		return random.sample(streams, 3) if len(streams) >= 3 else streams
 		
 	def _get_total_viewers(self):
-		streams = self._get_streams()
-		live_streams = streams[self.mode]
+		live_streams = self._get_streams()
 		viewers = 0
 		if len(live_streams) == 0:
 			return viewers
@@ -91,7 +87,7 @@ class SidebarBot(Bot):
 		return stream["viewers"]
 	
 	def _get_streams(self):
-		return requests.get("http://www.watchpeoplecode.com/api/v0/blob").json()
+		return requests.get("http://www.watchpeoplecode.com/api/v1/streams/live").json()
 
 if __name__ == '__main__':
 	if not os.environ.get('ENV_MODE'):
