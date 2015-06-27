@@ -87,7 +87,7 @@ class SidebarBot(Bot):
 		return stream["viewers"]
 	
 	def _get_streams(self):
-		return requests.get("http://www.watchpeoplecode.com/api/v1/streams/live").json()
+		return requests.get("http://www.watchpeoplecode.com/api/v1/streams/live").json()["data"]
 
 if __name__ == '__main__':
 	if not os.environ.get('ENV_MODE'):
